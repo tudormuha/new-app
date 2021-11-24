@@ -10,7 +10,7 @@ import Table from "./TableApi";
 import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
 import Home from "./Home";
 import { useSelector, useDispatch } from "react-redux";
-import { signOut, signIn } from "./actions/index";
+import { increment, decrement, signOut, signIn } from "./actions/index";
 
 const drawerWidth = 100;
 const baseurl = "http://localhost:3030/";

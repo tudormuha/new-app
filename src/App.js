@@ -10,14 +10,13 @@ import Table from "./TableApi";
 import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
 import Home from "./Home";
 import { useSelector, useDispatch } from "react-redux";
-import { increment, decrement, signOut, signIn } from "./actions/index";
+import { signOut, signIn } from "./actions/index";
 
 const drawerWidth = 100;
 const baseurl = "http://localhost:3030/";
 
 function App() {
   const counter = useSelector((state) => state.counter);
- 
 
   const dispatch = useDispatch();
 
@@ -91,12 +90,8 @@ function App() {
             <button onClick={() => dispatch(decrement())}>-</button>
           </div>
           <Routes>
-            {/* <Route path="/Table">
-              <Table />
-            </Route> */}            
             <Route path="/Table" element={<Table />} />
             <Route path="/" element={<Home />} />
-            
           </Routes>
         </Box>
       </Box>

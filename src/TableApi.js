@@ -9,10 +9,8 @@ import Paper from "@mui/material/Paper";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import { addAPI } from "./actions/index";
-import AuthCheck from "./AuthCheck";
 
 function TableApi() {
-  const isLogged = useSelector((state) => state.isLogged);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -44,29 +42,25 @@ function TableApi() {
     );
   };
 
-  AuthCheck();
-
-  if (isLogged) {
-    return (
-      <TableContainer component={Paper}>
-        <Table sx={{ minWidth: 650 }} aria-label="simple table">
-          <TableHead>
-            <TableRow>
-              <TableCell>Name </TableCell>
-              <TableCell align="center">Height</TableCell>
-              <TableCell align="center">Weight</TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {pokemonData &&
-              Object.keys(pokemonData).map((pokemonId) =>
-                getPokemonRow(pokemonId)
-              )}
-          </TableBody>
-        </Table>
-      </TableContainer>
-    );
-  } else return <div> You need to Log in</div>;
+  return (
+    <TableContainer component={Paper}>
+      <Table sx={{ minWidth: 650 }} aria-label="simple table">
+        <TableHead>
+          <TableRow>
+            <TableCell>Name </TableCell>
+            <TableCell align="center">Height</TableCell>
+            <TableCell align="center">Weight</TableCell>
+          </TableRow>
+        </TableHead>
+        <TableBody>
+          {pokemonData &&
+            Object.keys(pokemonData).map((pokemonId) =>
+              getPokemonRow(pokemonId)
+            )}
+        </TableBody>
+      </Table>
+    </TableContainer>
+  );
 }
 
 export default TableApi;

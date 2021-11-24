@@ -12,13 +12,46 @@ import Home from "./Home";
 import { useSelector, useDispatch } from "react-redux";
 import { increment, decrement, signOut, signIn } from "./actions/index";
 
+
 const drawerWidth = 100;
 const baseurl = "http://localhost:3030/";
 
 function App() {
   const counter = useSelector((state) => state.counter);
-
+  const isLogged = useSelector((state) => state.isLogged);
   const dispatch = useDispatch();
+
+  function tokenCheck(component) {
+    const token = localStorage.getItem("token");
+  
+    if (!token) {
+      console.log("No token saved");
+      return;
+    }
+    let h = new Headers();
+    h.append("Authorization", `Bearer ${token}`);
+    let url = baseurl + "test";
+    let req = new Request(url, {
+      headers: h,
+      method: "GET",
+    });
+  
+    fetch(req)
+      .then((res) => res.json())
+      .then((content) => {
+        if (content.code > 0) {
+          //error happened
+          localStorage.removeItem("token");
+          console.log("fail" + content.code);
+          dispatch(signOut());
+        } else {
+          console.log("success" + content.code);
+          dispatch(signIn());
+        }
+      });
+    if (isLogged) return component;
+    else return (<div> You need to log in</div>);
+  }
 
   function gettoken(ev) {
     //request a token
@@ -90,8 +123,10 @@ function App() {
             <button onClick={() => dispatch(decrement())}>-</button>
           </div>
           <Routes>
-            <Route path="/Table" element={<Table />} />
+                      
+            <Route path="/Table" element={tokenCheck(<Table />)} />
             <Route path="/" element={<Home />} />
+            
           </Routes>
         </Box>
       </Box>
